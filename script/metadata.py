@@ -3,7 +3,7 @@ import shutil
 import json
 import logging
 
-logging.basicConfig(filename='..\logs\model.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
+logging.basicConfig(filename='..\script\model.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 
 directory=('../data/train/wav')
 files=[]
