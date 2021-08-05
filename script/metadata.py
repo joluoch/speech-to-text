@@ -2,6 +2,7 @@ import os
 import shutil
 import json
 import logging
+import pandas as pd
 
 logging.basicConfig(filename='..\script\model.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 
@@ -75,6 +76,20 @@ def meta_data():
     with open("../data/meta_data.json", "w") as outfile: 
         json.dump(name_to_text, outfile)
 
+def get_file():
+    try:
+        logging.info('converting json to csv')
+
+        data = pd.DataFrame.from_dict(name_to_text, orient= 'index')
+        data = data.reset_index()
+        print('creating columns')
+        data.columns={'wav_file','text','length'}
+
+        data.to_csv('../data/metadata.csv',index=False)
+    except Exception as e :
+        print ('error'.format(e.__class__))
+
 if (__name__== '__main__'):
     merge_files()
     meta_data()
+    get_file()
