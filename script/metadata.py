@@ -77,6 +77,8 @@ def meta_data():
         json.dump(name_to_text, outfile)
 
 def get_file():
+    logging.info("===================== creating csv ==================== \n")
+    print ("===================== Creating csv ================= \n ")
     try:
         logging.info('converting json to csv')
 

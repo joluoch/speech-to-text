@@ -10,10 +10,10 @@ import soundfile as sf
 
 logging.basicConfig(filename='..\script\preprocessing.log', filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
 
-class PREPROCESS:
 
 
-    def make_stereo(audio_path):
+
+def make_stereo(audio_path):
         #this function converts mono audio channels into stereo channels 
     #     logging.info(" ============ Conerting audio sample from mono to stereo ================= ")
         print("======= Mono to stereo audio conversion")
@@ -43,7 +43,7 @@ class PREPROCESS:
 
 
 
-    def caclulate_duration(audio_file):
+def caclulate_duration(audio_file):
         print(" ============ Calculating duration of audio file =================")
 
 
@@ -56,15 +56,15 @@ class PREPROCESS:
 
 
 
-    def resample (file_path):
-        samples,sample_rate=librosa.load(file_path)
+def resample (file_path):
+        samples,sample_rate=librosa.load(file_path,8000)
         samples=librosa.resample(samples,sample_rate,8000)
         sf.write(file_path,samples,sample_rate)
 
 
 
 
-    def pad(audio_file):
+def pad(audio_file):
         print(" ============ checking duration of audio file to add padding  =================")
 
 
@@ -92,8 +92,8 @@ class PREPROCESS:
 
 
 
-    def shift (file_path):
-        logging.info(" ============ iAugmenting audio by shifting ================= ")
+def shift (file_path):
+        logging.info(" ============ Augmenting audio by shifting ================= ")
         samples, sample_rate = librosa.load(file_path)
         wav_roll = np.roll(samples,int(sample_rate/10))
         #plot_spec(data=wav_roll,sr=sample_rate,title=f'Shfiting the wave by Times {sample_rate/10}',fpath=wav)
@@ -102,14 +102,14 @@ class PREPROCESS:
 
 
 
-    def mfcc(wav):
-        logging.info(" ============ feature extraction mfcc  ================= ")
-        samples, sample_rate = librosa.load(wav)
-        mfcc = librosa.feature.mfcc(samples, sr=sample_rate)
-        # Center MFCC coefficient dimensions to the mean and unit variance
-        mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
-        librosa.display.specshow(mfcc, sr=sample_rate, x_axis='time')
+def mfcc(wav):
+    logging.info(" ============ feature extraction mfcc  ================= ")
+    samples, sample_rate = librosa.load(wav)
+    mfcc = librosa.feature.mfcc(samples, sr=sample_rate)
+    # Center MFCC coefficient dimensions to the mean and unit variance
+    mfcc = sklearn.preprocessing.scale(mfcc, axis=1)
+    librosa.display.specshow(mfcc, sr=sample_rate, x_axis='time')
         #print (f'MFCC is of type {type(mfcc)} with shape {mfcc.shape}')
         # MFCC is of type <class 'numpy.ndarray'> with shape (, )
-        sf.write(wav, samples, sample_rate)
-        return mfcc
+    sf.write(wav, samples, sample_rate)
+    return mfcc
